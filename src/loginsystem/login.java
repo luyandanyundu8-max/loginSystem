@@ -87,7 +87,6 @@ public class login {
         savedFirstName = firstName;
         savedLastName = lastName;
         savedPhone = phone;
-        
         return "User registered successfully.";
     }
 // this method checks if the username entered and password match with the saved ones 
