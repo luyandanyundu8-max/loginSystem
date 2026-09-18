@@ -116,25 +116,27 @@ public class LoginSystem {
     System.out.println("now enter your details to Login");
          // Keep asking until the login works
     while (true) {
-         // Ask for the username and password
+        // Ask for the username and password
         System.out.print("Enter username: ");
         username = scan.nextLine();
         System.out.print("Enter password: ");
         password = scan.nextLine();
-          // Use the login class to check if the details are correct
-        String message = login.returnLoginStatus(username, password);
-        System.out.println(message);
 
-        // If login succeeded, break out of the loop
-        if (!message.equalsIgnoreCase("Username or password incorrect, please try again.")) {
+        // Use the login class to check if the details are correct
+        if (login.loginUser(username, password)) {
+            // Login worked — show welcome message and stop the loop
+            System.out.println("Login successful!");
+            System.out.println(login.returnLoginStatus(username, password));
             break;
         }
-
-        // If login failed, loop back and ask again
-        System.out.println();
-        System.out.println("Please try again.");
-        System.out.println();
-    }
-  }
+        else {
+            // Login failed — tell the user and loop again
+            System.out.println("Username or password incorrect, please try again.");
+            System.out.println();
+            System.out.println("Please try again.");
+            System.out.println();
+        }
+}
+ }
 }
  
