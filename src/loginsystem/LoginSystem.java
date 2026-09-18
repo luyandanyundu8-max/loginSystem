@@ -121,7 +121,6 @@ public class LoginSystem {
         username = scan.nextLine();
         System.out.print("Enter password: ");
         password = scan.nextLine();
-
         // Use the login class to check if the details are correct
         if (login.loginUser(username, password)) {
             // Login worked — show welcome message and stop the loop
