@@ -8,6 +8,7 @@ package loginsystem;
  *
  * @author Nyundu
  */
+// This is my login class - Part 1
 import java.util.regex.Pattern;
 public class login {
     // variables to store the registered user details , but must as empty 
