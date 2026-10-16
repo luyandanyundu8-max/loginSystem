@@ -21,18 +21,21 @@ public class LoginSystem {
     // It welcomes the user, then calls register and login methods.
     public static void main(String[] args) {
           // Make a Scanner so we can read what the user types
-         Scanner scan = new Scanner(System.in);
-        
-         // Show welcome messages to the user
-        System.out.println(" | welcome to  registration  |");
-        System.out.println(" |please enter your details to create an account |");
-        System.out.println(" |username must contain '_' and be max 5 characters|");
-           // Call the register method so the user can sign up
-       registerUser(scan);
-         // After registering, ask the user to login
-       System.out.println();
-       System.out.println(" |now please login |");
-       loginUser(scan);
+       Scanner scan = new Scanner(System.in);
+
+    System.out.println("welcome to LT-CHATS registration");
+    System.out.println("please enter your details to create an account");
+    System.out.println("username must contain '_' and be max 5 characters");
+    registerUser(scan);
+    System.out.println();
+    System.out.println("now please login");
+     // login returns true if details are correct
+    boolean loggedIn = loginUser(scan);
+ // only start QuickChat if the login was successful
+    if (loggedIn) {
+        Message.startQuickChat(scan);
+    }
+    
     }
      
           // This method asks the user for their details to register.
@@ -109,33 +112,32 @@ public class LoginSystem {
     }
          // This method lets the user login with their username and password.
          // If the details are wrong, it keeps asking until they get it right.
-   public static void loginUser(Scanner scan) {
-    String username, password;   // These will hold the login details the user types
+  public static boolean loginUser(Scanner scan) {
+    String username, password;
 
     System.out.println();
     System.out.println("now enter your details to Login");
-         // Keep asking until the login works
+
+    // keep asking until login is correct
     while (true) {
-        // Ask for the username and password
         System.out.print("Enter username: ");
         username = scan.nextLine();
         System.out.print("Enter password: ");
         password = scan.nextLine();
-        // Use the login class to check if the details are correct
+
+        // check the details
         if (login.loginUser(username, password)) {
-            // Login worked — show welcome message and stop the loop
             System.out.println("Login successful!");
             System.out.println(login.returnLoginStatus(username, password));
-            break;
+            return true;
         }
         else {
-            // Login failed — tell the user and loop again
             System.out.println("Username or password incorrect, please try again.");
             System.out.println();
             System.out.println("Please try again.");
             System.out.println();
         }
+    }
 }
- }
 }
  

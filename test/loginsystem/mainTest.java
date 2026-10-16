@@ -40,6 +40,7 @@ public class mainTest {
         login.savedFirstName = "";
         login.savedLastName = "";
         login.savedPhone = "";
+        Message.resetAll();
     }
     
     // Runs after each test.
@@ -186,4 +187,135 @@ public class mainTest {
         assertFalse(login.checkCellPhoneNumber("08966553"));
         System.out.println("Cell phone number incorrectly formatted: False");
     }
+     
+    // ===================================================
+    // PART 2 TESTS — Message class (12 tests)
+    // ===================================================
+
+    // TEST 15: Message ID is created and is 10 digits
+    @Test
+    public void testMessageIDCreated() {
+        String id = Message.generateMessageID();
+        System.out.println("Message ID generated: " + id);
+        assertEquals(10, id.length());
+    }
+
+    // TEST 16: Message ID valid (<= 10 chars)
+    @Test
+    public void testCheckMessageIDValid() {
+        Message m = new Message("1234567890", 1, "+27718693002",
+                                "Hi Mike, can you join us for dinner tonight?");
+        assertEquals(true, m.checkMessageID());
+        System.out.println("Message ID valid");
+    }
+
+    // TEST 17: Message ID invalid (> 10 chars)
+    @Test
+    public void testCheckMessageIDInvalid() {
+        Message m = new Message("12345678901", 1, "+27718693002",
+                                "Hi Mike, can you join us for dinner tonight?");
+        assertEquals(false, m.checkMessageID());
+        System.out.println("Message ID invalid");
+    }
+
+    // TEST 18: Recipient cell correctly formatted
+    @Test
+    public void testRecipientCellSuccess() {
+        Message m = new Message("1234567890", 1, "+27718693002",
+                                "Hi Mike, can you join us for dinner tonight?");
+        assertEquals("Cell phone number successfully captured.",
+                     m.checkRecipientCell());
+        System.out.println("Recipient correct");
+    }
+
+    // TEST 19: Recipient cell incorrectly formatted
+    @Test
+    public void testRecipientCellFailure() {
+        Message m = new Message("1234567890", 1, "08575975889",
+                                "Hi Keegan, did you receive the payment?");
+        assertEquals(
+            "Cell phone number is incorrectly formatted or does "
+            + "not contain an international code. Please correct "
+            + "the number and try again.",
+            m.checkRecipientCell());
+        System.out.println("Recipient incorrect");
+    }
+
+    // TEST 20: Message length success (<= 250 chars)
+    @Test
+    public void testMessageLengthSuccess() {
+        Message m = new Message("1234567890", 1, "+27718693002",
+                                "Hi Mike, can you join us for dinner tonight?");
+        assertEquals("Message ready to send.", m.checkMessageLength());
+        System.out.println("Message length OK");
+    }
+
+    // TEST 21: Message length failure (> 250 chars)
+    @Test
+    public void testMessageLengthFailure() {
+        String longMsg = "";
+        for (int i = 0; i < 260; i++) {
+            longMsg = longMsg + "a";
+        }
+        Message m = new Message("1234567890", 1, "+27718693002", longMsg);
+        assertEquals(
+            "Message exceeds 250 characters by 10; please reduce the size.",
+            m.checkMessageLength());
+        System.out.println("Message too long");
+    }
+
+    // TEST 22: Message hash correct (rubric test case 1)
+    @Test
+    public void testMessageHash() {
+        Message m = new Message("0012345678", 0, "+27718693002",
+                                "Hi Mike, can you join us for dinner tonight?");
+        assertEquals("00:0:HITONIGHT", m.getMessageHash());
+        System.out.println("Hash correct");
+    }
+
+    // TEST 23: SentMessage — Send
+    @Test
+    public void testSentMessageSend() {
+        Message m = new Message("1234567890", 1, "+27718693002",
+                                "Hi Mike, can you join us for dinner tonight?");
+        assertEquals("Message successfully sent.", m.SentMessage("1"));
+        assertEquals(1, Message.returnTotalMessages());
+        System.out.println("Message sent");
+    }
+
+    // TEST 24: SentMessage — Disregard
+    @Test
+    public void testSentMessageDisregard() {
+        Message m = new Message("1234567890", 1, "+27718693002",
+                                "Hi Mike, can you join us for dinner tonight?");
+        assertEquals("Press 0 to delete the message.", m.SentMessage("2"));
+        assertEquals(0, Message.returnTotalMessages());
+        System.out.println("Message disregarded");
+    }
+
+    // TEST 25: SentMessage — Store
+    @Test
+    public void testSentMessageStore() {
+        Message m = new Message("1234567890", 1, "+27718693002",
+                                "Hi Mike, can you join us for dinner tonight?");
+        assertEquals("Message successfully stored.", m.SentMessage("3"));
+        assertEquals(0, Message.returnTotalMessages());
+        System.out.println("Message stored");
+    }
+
+    // TEST 26: Two messages — one Send, one Disregard
+    @Test
+    public void testTwoMessagesSendAndDisregard() {
+        Message m1 = new Message("1111111111", 1, "+27718693002",
+                                 "Hi Mike, can you join us for dinner tonight?");
+        Message m2 = new Message("2222222222", 2, "08575975889",
+                                 "Hi Keegan, did you receive the payment?");
+
+        assertEquals("Message successfully sent.", m1.SentMessage("1"));
+        assertEquals("Press 0 to delete the message.", m2.SentMessage("2"));
+
+        assertEquals(1, Message.returnTotalMessages());
+        System.out.println("Send + Disregard flow correct");
+    }
 }
+
