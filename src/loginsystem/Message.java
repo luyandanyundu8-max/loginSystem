@@ -130,61 +130,63 @@ public class Message {
     // ===============================================================
 
     public String createMessageHash() {
-        String firstTwo = messageID.substring(0, 2);
-        int spaceIndex = message.indexOf(' ');
-        String firstWord;
-        String lastWord;
+         String firstTwo = messageID.substring(0, 2);
+    int spaceIndex = message.indexOf(' ');
+    String firstWord;
+    String lastWord;
 
-        if (spaceIndex == -1) {
-            firstWord = message;
-            lastWord = message;
-        } else {
-            firstWord = message.substring(0, spaceIndex);
-            lastWord = message.substring(message.lastIndexOf(' ') + 1);
+    if (spaceIndex == -1) {
+        firstWord = message;
+        lastWord = message;
+    } else {
+        firstWord = message.substring(0, spaceIndex);
+        lastWord = message.substring(message.lastIndexOf(' ') + 1);
+    }
+
+    String cleanFirst = "";
+    String cleanLast = "";
+
+    for (int i = 0; i < firstWord.length(); i++) {
+        if (Character.isLetter(firstWord.charAt(i))) {
+            cleanFirst = cleanFirst + firstWord.charAt(i);
         }
-
-        String cleanFirst = "";
-        String cleanLast = "";
-
-        for (int i = 0; i < firstWord.length(); i++) {
-            if (Character.isLetter(firstWord.charAt(i))) {
-                cleanFirst = cleanFirst + firstWord.charAt(i);
-            }
+    }
+    for (int i = 0; i < lastWord.length(); i++) {
+        if (Character.isLetter(lastWord.charAt(i))) {
+            cleanLast = cleanLast + lastWord.charAt(i);
         }
-        for (int i = 0; i < lastWord.length(); i++) {
-            if (Character.isLetter(lastWord.charAt(i))) {
-                cleanLast = cleanLast + lastWord.charAt(i);
-            }
-        }
+    }
 
-        return (firstTwo + ":" + messageNumber + ":" +
-                cleanFirst + cleanLast).toUpperCase();
+    this.messageHash = (firstTwo + ":" + messageNumber + ":" +
+                        cleanFirst + cleanLast).toUpperCase();
+    return this.messageHash;
     }
 
     // ===============================================================
     // SentMessage — "1"=Send  "2"=Disregard  "3"=Store
     // ===============================================================
 
+   
     public String SentMessage(String option) {
-        switch (option) {
-            case "1":
-                sentMessages.add(this);
-                totalMessages++;
-                messageStatus = "Sent";
-                return "Message successfully sent.";
-            case "2":
-                disregardedMessages.add(this);
-                messageStatus = "Disregarded";
-                return "Press 0 to delete the message.";
-            case "3":
-                storedMessages.add(this);
-                messageStatus = "Stored";
-                storeMessage();
-                return "Message successfully stored.";
-            default:
-                return "Invalid option.";
-        }
+    switch (option) {
+        case "1":
+            sentMessages.add(this);
+            totalMessages++;
+            messageStatus = "Sent";
+            return "Message successfully sent.";
+        case "2":
+            disregardedMessages.add(this);
+            messageStatus = "Disregarded";
+            return "Press 0 to delete the message.";
+        case "3":
+            storedMessages.add(this);
+            messageStatus = "Stored";
+            storeMessage();
+            return "Message successfully stored.";
+        default:
+            return "Invalid option.";
     }
+}    
 
     // ===============================================================
     // storeMessage — append this message as JSON to messages.json

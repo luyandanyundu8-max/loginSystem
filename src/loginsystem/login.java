@@ -17,10 +17,13 @@ public class login {
    public  static String savedLastName = "";
    public static String savedPhone = "";
    
-   // Declare regex pattern
-    private static final Pattern PHONE_PATTERN = Pattern.compile("^\\+[0-9]{1,3}[0-9]{1,10}$");// country code (1-3)+ number(1-10)
-// this pattern checks if phone number start with + and has numbers after it 
-    
+   
+   // Regex researched from Oracle's Pattern class documentation:
+// https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html
+// Format: +27 followed by 9 digits (South African international number)
+private static final Pattern PHONE_PATTERN =
+        Pattern.compile("^\\+27[0-9]{9}$");
+   
     // this method checks if username is correctly formatted 
     public static boolean checkUserName(String username) {
         if (username.length() == 0 || username.length() > 5) {

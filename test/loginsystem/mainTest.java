@@ -317,5 +317,29 @@ public class mainTest {
         assertEquals(1, Message.returnTotalMessages());
         System.out.println("Send + Disregard flow correct");
     }
+    // TEST 27: printMessageDetails returns the exact format
+@Test
+public void testPrintMessageDetails() {
+    Message m = new Message("1234567890", 1, "+27718693002", "Hi Mike");
+    String expected = "Message ID: 1234567890"
+                    + "\nMessage Hash: " + m.getMessageHash()
+                    + "\nRecipient: +27718693002"
+                    + "\nMessage: Hi Mike";
+    assertEquals(expected, m.printMessageDetails());
+}
+
+// TEST 28: printMessages returns empty string when nothing sent
+@Test
+public void testPrintMessagesEmpty() {
+    assertEquals("", Message.printMessages());
+}
+
+// TEST 29: printMessages contains sent message after send
+@Test
+public void testPrintMessagesAfterOneSend() {
+    Message m = new Message("1111111111", 1, "+27718693002", "Hi Mike");
+    m.SentMessage("1");
+    assertTrue(Message.printMessages().contains("1111111111"));
+}
 }
 
