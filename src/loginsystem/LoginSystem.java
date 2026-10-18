@@ -59,7 +59,7 @@ public class LoginSystem {
             System.out.print("Enter username (must contain _ and be <= 5 characters): ");
             username = scan.nextLine();
              // Use the login class to check if the username is okay
-            if (login.checkUserName(username)) {
+            if (Login.checkUserName(username)) {
                 System.out.println("Username successfully captured.");
                 break; // Stop the loop because it's valid
             }
@@ -74,7 +74,7 @@ public class LoginSystem {
             System.out.print("Enter password (>= 8 chars, 1 capital, 1 number, 1 special char): ");
             password = scan.nextLine();
          // Use the login class to check the password
-            if (login.checkPasswordComplexity(password)) {
+            if (Login.checkPasswordComplexity(password)) {
                 System.out.println("Password successfully captured.");
                 break;// Stop the loop because it's valid
             }
@@ -89,7 +89,7 @@ public class LoginSystem {
             System.out.print("Enter cell phone number (must start with + and followed by up to 10 digits): ");
             phone = scan.nextLine();
             // Use the login class to check the phone number
-            if (login.checkCellPhoneNumber(phone)) {
+            if (Login.checkCellPhoneNumber(phone)) {
                 System.out.println("Cell phone number successfully added.");
                 break;
             }
@@ -98,7 +98,7 @@ public class LoginSystem {
             }
         }
           // Now save all the details using the login class
-        String result = login.registerUser(username, password, firstName, lastName, phone);
+        String result = Login.registerUser(username, password, firstName, lastName, phone);
         System.out.println(result);
          // If registration worked, show the user their details
         if (result.equals("User registered successfully.")) {
@@ -126,9 +126,9 @@ public class LoginSystem {
         password = scan.nextLine();
 
         // check the details
-        if (login.loginUser(username, password)) {
+        if (Login.loginUser(username, password)) {
             System.out.println("Login successful!");
-            System.out.println(login.returnLoginStatus(username, password));
+            System.out.println(Login.returnLoginStatus(username, password));
             return true;
         }
         else {

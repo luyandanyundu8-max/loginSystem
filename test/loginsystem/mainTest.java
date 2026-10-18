@@ -36,11 +36,11 @@ public class mainTest {
     // Clears the saved user info so tests don't mess each other up.
     @Before
     public void setUp() {
-        login.savedUsername = "";
-        login.savedPassword = "";
-        login.savedFirstName = "";
-        login.savedLastName = "";
-        login.savedPhone = "";
+        Login.savedUsername = "";
+        Login.savedPassword = "";
+        Login.savedFirstName = "";
+        Login.savedLastName = "";
+        Login.savedPhone = "";
         Message.resetAll();
     }
     
@@ -58,7 +58,7 @@ public class mainTest {
     // Expected: true
     @Test
     public void testUsernameCorrectlyFormatted() {
-        boolean result = login.checkUserName("kyl_1");
+        boolean result = Login.checkUserName("kyl_1");
         assertEquals(true, result);
         System.out.println("Username is correctly formatted: true");
     }
@@ -68,7 +68,7 @@ public class mainTest {
     // Expected: false
     @Test
     public void testUsernameIncorrectlyFormatted() {
-        boolean result = login.checkUserName("kyle!!!!!!!");
+        boolean result = Login.checkUserName("kyle!!!!!!!");
         assertEquals(false, result);
         System.out.println("Username is incorrectly formatted: false");
     }
@@ -78,7 +78,7 @@ public class mainTest {
     // Expected: true
     @Test
     public void testPasswordMeetsComplexity() {
-        boolean result = login.checkPasswordComplexity("Ch&sec@ke99!");
+        boolean result = Login.checkPasswordComplexity("Ch&sec@ke99!");
         assertEquals(true, result);
         System.out.println("Password successfully captured.");
     }
@@ -88,7 +88,7 @@ public class mainTest {
     // Expected: false
     @Test
     public void testPasswordDoesNotMeetComplexity() {
-        boolean result = login.checkPasswordComplexity("password");
+        boolean result = Login.checkPasswordComplexity("password");
         assertEquals(false, result);
         System.out.println("Password is not correctly formatted; please ensure that the password contains at least eight characters, a capital letter, a number, and a special character.");
     }
@@ -98,7 +98,7 @@ public class mainTest {
     // Expected: true
     @Test
     public void testPhoneCorrectlyFormatted() {
-        boolean result = login.checkCellPhoneNumber("+27838968976");
+        boolean result = Login.checkCellPhoneNumber("+27838968976");
         assertEquals(true, result);
         System.out.println("Cell number successfully captured.");
     }
@@ -108,7 +108,7 @@ public class mainTest {
     // Expected: false
     @Test
     public void testPhoneIncorrectlyFormatted() {
-        boolean result = login.checkCellPhoneNumber("08966553");
+        boolean result = Login.checkCellPhoneNumber("08966553");
         assertEquals(false, result);
         System.out.println("Cell number is incorrectly formatted or does not contain an international code; please correct the number and try again.");
     }
@@ -121,12 +121,12 @@ public class mainTest {
     // Expected: True
     @Test
     public void testLoginSuccessful() {
-        login.savedUsername = "kyl_1";
-        login.savedPassword = "Ch&sec@ke99!";
-        login.savedFirstName = "Kyle";
-        login.savedLastName = "Smith";
+        Login.savedUsername = "kyl_1";
+        Login.savedPassword = "Ch&sec@ke99!";
+        Login.savedFirstName = "Kyle";
+        Login.savedLastName = "Smith";
         
-        assertTrue(login.loginUser("kyl_1", "Ch&sec@ke99!"));
+        assertTrue(Login.loginUser("kyl_1", "Ch&sec@ke99!"));
         System.out.println("Login Successful: True");
     }
 
@@ -134,10 +134,10 @@ public class mainTest {
     // Expected: False
     @Test
     public void testLoginFailed() {
-        login.savedUsername = "kyl_1";
-        login.savedPassword = "Ch&sec@ke99!";
+        Login.savedUsername = "kyl_1";
+        Login.savedPassword = "Ch&sec@ke99!";
         
-        assertFalse(login.loginUser("wrong", "wrong"));
+        assertFalse(Login.loginUser("wrong", "wrong"));
         System.out.println("Login Failed: False");
     }
 
@@ -145,7 +145,7 @@ public class mainTest {
     // Expected: True
     @Test
     public void testUsernameCorrectlyFormattedTrue() {
-        assertTrue(login.checkUserName("kyl_1"));
+        assertTrue(Login.checkUserName("kyl_1"));
         System.out.println("Username correctly formatted: True");
     }
 
@@ -153,7 +153,7 @@ public class mainTest {
     // Expected: False
     @Test
     public void testUsernameIncorrectlyFormattedFalse() {
-        assertFalse(login.checkUserName("kyle!!!!!!!"));
+        assertFalse(Login.checkUserName("kyle!!!!!!!"));
         System.out.println("Username incorrectly formatted: False");
     }
 
@@ -161,7 +161,7 @@ public class mainTest {
     // Expected: True
     @Test
     public void testPasswordMeetsComplexityTrue() {
-        assertTrue(login.checkPasswordComplexity("Ch&sec@ke99!"));
+        assertTrue(Login.checkPasswordComplexity("Ch&sec@ke99!"));
         System.out.println("Password meets complexity: True");
     }
 
@@ -169,7 +169,7 @@ public class mainTest {
     // Expected: False
     @Test
     public void testPasswordDoesNotMeetComplexityFalse() {
-        assertFalse(login.checkPasswordComplexity("password"));
+        assertFalse(Login.checkPasswordComplexity("password"));
         System.out.println("Password does not meet complexity: False");
     }
 
@@ -177,7 +177,7 @@ public class mainTest {
     // Expected: True
     @Test
     public void testCellPhoneCorrectlyFormattedTrue() {
-        assertTrue(login.checkCellPhoneNumber("+27838968976"));
+        assertTrue(Login.checkCellPhoneNumber("+27838968976"));
         System.out.println("Cell phone number correctly formatted: True");
     }
 
@@ -185,7 +185,7 @@ public class mainTest {
     // Expected: False
     @Test
     public void testCellPhoneIncorrectlyFormattedFalse() {
-        assertFalse(login.checkCellPhoneNumber("08966553"));
+        assertFalse(Login.checkCellPhoneNumber("08966553"));
         System.out.println("Cell phone number incorrectly formatted: False");
     }
      
@@ -341,6 +341,47 @@ public void testPrintMessagesAfterOneSend() {
     Message m = new Message("1111111111", 1, "+27718693002", "Hi Mike");
     m.SentMessage("1");
     assertTrue(Message.printMessages().contains("1111111111"));
-}
+ }
+    // ===================================================
+    // NEW TESTS: String Assertions ( FROM Lecturer Feedback)
+    // ===================================================
+
+    @Test
+    public void testRegisterUserSuccessMessage() {
+        String result = Login.registerUser("kyl_1", "Ch&sec@ke99!", "Kyle", "Smith", "+27838968976");
+        assertEquals("User registered successfully.", result);
+    }
+
+    @Test
+    public void testRegisterUserBadUsernameMessage() {
+        String result = Login.registerUser("kyle!!!!!!!", "Ch&sec@ke99!", "Kyle", "Smith", "+27838968976");
+        assertEquals("Username is not correctly formatted; please ensure that your username contains an underscore and is no more than five characters in length.", result);
+    }
+
+    @Test
+    public void testRegisterUserBadPasswordMessage() {
+        String result = Login.registerUser("kyl_1", "password", "Kyle", "Smith", "+27838968976");
+        assertEquals("Password is not correctly formatted; please ensure that the password contains at least eight characters, a capital letter, a number, and a special character.", result);
+    }
+
+    @Test
+    public void testRegisterUserBadPhoneMessage() {
+        String result = Login.registerUser("kyl_1", "Ch&sec@ke99!", "Kyle", "Smith", "08966553");
+        assertEquals("Cell phone number incorrectly formatted or does not contain international code.", result);
+    }
+
+    @Test
+    public void testLoginSuccessMessage() {
+        Login.registerUser("kyl_1", "Ch&sec@ke99!", "Kyle", "Smith", "+27838968976");
+        String result = Login.returnLoginStatus("kyl_1", "Ch&sec@ke99!");
+        assertEquals("Welcome Kyle, Smith it is great to see you again.", result);
+    }
+
+    @Test
+    public void testLoginFailureMessage() {
+        Login.registerUser("kyl_1", "Ch&sec@ke99!", "Kyle", "Smith", "+27838968976");
+        String result = Login.returnLoginStatus("wrong", "wrong");
+        assertEquals("Username or password incorrect, please try again.", result);
+    }
 }
 
