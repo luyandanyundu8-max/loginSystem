@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 /**
  *
  * @author Nyundu
@@ -24,6 +25,7 @@ public class Message {
     private String message;
     private String messageHash;
     private String messageStatus;
+    private static final Pattern RECIPIENT_PATTERN = Pattern.compile("^\\+27[0-9]{9}$");
 
     // Stores messages sent during the program
     private static ArrayList<Message> sentMessages = new ArrayList<>();
@@ -98,17 +100,13 @@ public class Message {
     // ===============================================================
 
     public String checkRecipientCell() {
-        if (recipient.length() == 0 || recipient.charAt(0) != '+') {
+         if (RECIPIENT_PATTERN.matcher(recipient).matches()) {
+            return "Cell phone number successfully captured.";
+        } else {
             return "Cell phone number is incorrectly formatted or does "
                  + "not contain an international code. Please correct "
                  + "the number and try again.";
         }
-        if (recipient.length() > 12) {
-            return "Cell phone number is incorrectly formatted or does "
-                 + "not contain an international code. Please correct "
-                 + "the number and try again.";
-        }
-        return "Cell phone number successfully captured.";
     }
 
     // ===============================================================
