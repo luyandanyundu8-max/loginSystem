@@ -107,7 +107,6 @@ public class LoginSystem {
             System.out.println("Name: " + firstName);
             System.out.println("Surname: " + lastName);
             System.out.println("Username: " + username);
-            System.out.println("Password: " + password);
             System.out.println("Phone: " + phone);
         }
     }
