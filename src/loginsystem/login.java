@@ -2,12 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+// Login class - final version for Part 1
 package loginsystem;
 
 /**
  *
  * @author Nyundu
  */
+// This is my login class - Part 1
 import java.util.regex.Pattern;
 public class login {
     // variables to store the registered user details , but must as empty 
@@ -88,7 +90,6 @@ private static final Pattern PHONE_PATTERN =
         savedFirstName = firstName;
         savedLastName = lastName;
         savedPhone = phone;
-        
         return "User registered successfully.";
     }
 // this method checks if the username entered and password match with the saved ones 
