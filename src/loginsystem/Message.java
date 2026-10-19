@@ -86,6 +86,7 @@ public class Message {
         }
         return id;
     }
+    
 
     // ===============================================================
     // checkMessageID — must be <= 10 characters
