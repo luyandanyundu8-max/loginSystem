@@ -86,7 +86,8 @@ public class LoginSystem {
           // Keep asking for a phone number until it is valid
          // Valid means: starts with '+' and has a country code and number
         while (true) {
-            System.out.print("Enter cell phone number (must start with + and followed by up to 10 digits): ");
+            System.out.print("Enter cell phone number (must start with +27 and be followed by 9 digits): ");
+                    
             phone = scan.nextLine();
             // Use the login class to check the phone number
             if (Login.checkCellPhoneNumber(phone)) {
