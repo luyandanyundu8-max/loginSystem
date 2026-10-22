@@ -6,6 +6,11 @@ This is my Programming 1A project for Part 1, Part 2, and Part 3. It is made in 
 The program lets a user register and then login. It checks if the username, password, and phone number are in the right format. 
 After logging in, it opens the QuickChat menu where users can send, store, or disregard messages. Messages are saved to a JSON file. Finally, a fourth menu option allows users to read that JSON file, populate arrays, and search, delete, or display a report of the stored messages.
 
+## JSON Storage
+The app creates and writes to a file named `messages.json` in the project folder. 
+When a user chooses to "Store" a message in Part 2, the `Message.java` class uses a `FileWriter` to append the message details (ID, Recipient, Hash, and Text) into this JSON file. 
+In Part 3, the `StoredMessages.java` class reads this exact file to populate the required arrays for searching and displaying.
+
 ## Rules
 **Username:**
 * must have an underscore (_)
