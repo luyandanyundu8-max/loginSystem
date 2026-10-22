@@ -275,6 +275,7 @@ public class Message {
             System.out.println("1. Send Messages");
             System.out.println("2. Show recently sent messages");
             System.out.println("3. Quit");
+            System.out.println("4. Stored Messages");
             System.out.print("Choose an option: ");
 
             String option = input.nextLine();
@@ -289,9 +290,13 @@ public class Message {
                 case "3":
                     running = false;
                     System.out.println("\nThank you for using QuickChat.");
+                     break;
+                case "4": // <-- ADDED THIS CASE
+                    StoredMessages sm = new StoredMessages();
+                    sm.storedMessagesMenu(input);
                     break;
                 default:
-                    System.out.println("\nInvalid option. Please choose 1, 2, or 3.");
+                    System.out.println("\nInvalid option. Please choose 1, 2, 3 or 4.");
             }
         }
     }
