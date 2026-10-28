@@ -333,6 +333,7 @@ public class Message {
                     break;
                 }
             }
+        
 
             // MESSAGE
             String messageText;

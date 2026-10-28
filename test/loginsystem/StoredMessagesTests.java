@@ -106,5 +106,32 @@ public class StoredMessagesTests {
         
         // The system should return the successful deletion message
         assertTrue(out.toString().contains("Message successfully deleted."));
-    }   
+    }  
+        // Test 6: Verify JSON Parsing (Boundary test)
+    @Test
+    public void testJsonParsingBoundary() {
+        // This proves we can load the data into the arrays correctly
+        String[] stored = sm.getStoredMessages();
+        assertEquals(2, stored.length); // We expect 2 stored messages from the @Before setup
+        assertEquals("Where are you? You are late! I have asked you to be on time.", stored[0]);
+    }
+
+    
+        // Test 7: Verify Menu Flow (Report generation)
+    @Test
+    public void testDisplayReportMenuFlow() {
+        // Simulate the user typing 'f' to display the report, then 'x' to exit
+        Scanner input = new Scanner("f\nx\n");
+        java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();
+        System.setOut(new java.io.PrintStream(out));
+        
+        sm.storedMessagesMenu(input);
+        
+        String output = out.toString();
+        
+        // The system should print the Hash, Recipient, and Message of the STORED messages
+        assertTrue(output.contains("Message Hash: H2"));
+        assertTrue(output.contains("Recipient: +27838884567"));
+        assertTrue(output.contains("Message: Where are you? You are late! I have asked you to be on time."));
+    }
 }

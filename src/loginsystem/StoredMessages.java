@@ -57,6 +57,10 @@ public class StoredMessages {
     }
 
     // This method reads the JSON file and creates MessageRecord objects
+    // Attribution: Research on reading text files line-by-line in Java 
+    // Source: Oracle Java 8 Documentation - java.util.Scanner 
+    // URL: https://docs.oracle.com/javase/8/docs/api/java/util/Scanner.html
+    
     public void loadStoredMessagesFromJSON() {
         messages.clear();
         try {
@@ -215,5 +219,7 @@ public class StoredMessages {
     public String[] getSentMessages() { return sentMessages; }
     public String[] getDisregardedMessages() { return disregardedMessages; }
     public String[] getStoredMessages() { return storedMessages; }
-}
+  
+ }
+
 

@@ -375,6 +375,8 @@ public void testPrintMessagesAfterOneSend() {
         Login.registerUser("kyl_1", "Ch&sec@ke99!", "Kyle", "Smith", "+27838968976");
         String result = Login.returnLoginStatus("kyl_1", "Ch&sec@ke99!");
         assertEquals("Welcome Kyle, Smith it is great to see you again.", result);
+        
+        
     }
 
     @Test
