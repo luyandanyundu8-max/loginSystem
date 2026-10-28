@@ -1,10 +1,15 @@
 # Login & QuickChat System
 
-This is my Programming 1A project for Part 1 and Part 2. It is made in Java using NetBeans.
+This is my Programming 1A project for Part 1, Part 2, and Part 3. It is made in Java using NetBeans.
 
 ## What it does
-The program lets a user register and then login. It checks if the username, password and phone number are in the right format. 
-After logging in, it opens the QuickChat menu where users can send, store, or disregard messages. Messages are saved to a JSON file.
+The program lets a user register and then login. It checks if the username, password, and phone number are in the right format. 
+After logging in, it opens the QuickChat menu where users can send, store, or disregard messages. Messages are saved to a JSON file. Finally, a fourth menu option allows users to read that JSON file, populate arrays, and search, delete, or display a report of the stored messages.
+
+## JSON Storage
+The app creates and writes to a file named `messages.json` in the project folder. 
+When a user chooses to "Store" a message in Part 2, the `Message.java` class uses a `FileWriter` to append the message details (ID, Recipient, Hash, and Text) into this JSON file. 
+In Part 3, the `StoredMessages.java` class reads this exact file to populate the required arrays for searching and displaying.
 
 ## Rules
 **Username:**
@@ -24,8 +29,10 @@ After logging in, it opens the QuickChat menu where users can send, store, or di
 ## Files
 * `LoginSystem.java` - the main file that runs the program
 * `Login.java` - the file that checks registration and login
-* `Message.java` - the file that handles messages, hashes, and JSON storage
-* `mainTest.java` - the tests for the code
+* `Message.java` - the file that handles sending messages and writing to JSON
+* `StoredMessages.java` - the file that reads the JSON, populates arrays, and handles the Part 3 menu (search, delete, report)
+* `mainTest.java` - the tests for Part 1 and Part 2
+* `StoredMessagesTests.java` - the tests for Part 3
 * `messages.json` - the file where stored messages are saved
 
 ## How to run
@@ -33,18 +40,26 @@ After logging in, it opens the QuickChat menu where users can send, store, or di
 2. Run LoginSystem.java
 3. Type in your details and register
 4. Login with the same details
-5. Use the QuickChat menu to send messages
+5. Use the QuickChat menu to send messages, or choose Option 4 for Stored Messages.
 
 ## How to run the tests
-1. Right click on mainTest.java
-2. Click Test File
-3. All 35 tests should pass
+1. Right-click `mainTest.java` -> Test File (Runs 35 tests)
+2. Right-click `StoredMessagesTests.java` -> Test File (Runs 5 tests)
+3. All 40 tests should pass.
+
+## Part 3: Stored Messages Features
+The `StoredMessages` class reads the JSON file into 5 arrays. Through the menu, users can:
+* Display sender and recipient of all stored messages.
+* Display the longest message.
+* Search for a message by ID.
+* Search for messages sent to a specific recipient.
+* Delete a message using its hash.
+* Display a full report.
 
 ## References & Attribution
 To fulfill the research requirement for this project, the following resources were used:
 * **Phone Number Regex:** Oracle. (2024). *java.util.regex.Pattern*. Retrieved from https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html
-* **JSON File Writing:** Oracle. (2024). *java.io.FileWriter*. Retrieved from https://docs.oracle.com/javase/8/docs/api/java/io/FileWriter.html
-* **Message Hashing:** Oracle. (2024). *java.lang.String*. Retrieved from https://docs.oracle.com/javase/8/docs/api/java/lang/String.html
+* **Reading/Writing JSON Files:** Oracle. (2024). *java.io.FileWriter* and *java.util.Scanner*. Retrieved from https://docs.oracle.com/javase/8/docs/api/java/io/FileWriter.html
 
 ## Author
 Luyanda Nyundu
