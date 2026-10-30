@@ -108,5 +108,12 @@ private static final Pattern PHONE_PATTERN =
             return "Username or password incorrect, please try again.";// if login, fails show error message 
         }
     }
+     public static String getSavedFirstName() {
+        return savedFirstName;
+    }
+
+    public static String getSavedLastName() {
+        return savedLastName;
+    }
 }
 

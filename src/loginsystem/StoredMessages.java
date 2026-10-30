@@ -85,8 +85,9 @@ public class StoredMessages {
                     int statusEnd = line.indexOf("\"", statusStart);
                     status = line.substring(statusStart, statusEnd);
                 }
+                
 
-                messages.add(new MessageRecord(id, hash, recipient, text, status, "Developer"));
+           messages.add(new MessageRecord(id, hash, recipient, text, status, Login.getSavedFirstName() + " " + Login.getSavedLastName()));
             }
             scanner.close();
         } catch (Exception e) {
