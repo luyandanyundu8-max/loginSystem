@@ -192,15 +192,22 @@ public class Message {
     // ===============================================================
 
     public void storeMessage() {
-        try {
+       try {
+            // 1. Fix the message text so quotes and backslashes don't break the JSON
+            String safeMessage = message.replace("\\", "\\\\").replace("\"", "\\\"");
+            String safeHash = messageHash.replace("\\", "\\\\").replace("\"", "\\\"");
+            String safeRecipient = recipient.replace("\\", "\\\\").replace("\"", "\\\"");
+
+            // 2. Build the JSON string using the safe text
             String json = "{" +
                     "\"messageID\":\"" + messageID + "\"," +
                     "\"messageNumber\":" + messageNumber + "," +
-                    "\"recipient\":\"" + recipient + "\"," +
-                    "\"message\":\"" + message + "\"," +
-                    "\"hash\":\"" + messageHash + "\"" +
+                    "\"recipient\":\"" + safeRecipient + "\"," +
+                    "\"message\":\"" + safeMessage + "\"," +
+                    "\"hash\":\"" + safeHash + "\"" +
                     "}";
 
+            // 3. Write to the file
             FileWriter writer = new FileWriter("messages.json", true);
             writer.write(json + "\n");
             writer.close();

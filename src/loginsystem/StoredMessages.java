@@ -12,26 +12,26 @@ import java.util.Scanner;
  * @author Nyundu
  */
 public class StoredMessages {
-    // The name of the JSON file we are reading from
+
+    // The name of the JSON file we read from
     private final String jsonFile = "messages.json";
 
-    // The 5 required arrays for Part 3. 
-    // We start them at size 0, and they will grow dynamically.
+    // The 5 required arrays for Part 3
     private String[] sentMessages = new String[0];
     private String[] disregardedMessages = new String[0];
     private String[] storedMessages = new String[0];
     private String[] messageHashes = new String[0];
     private String[] messageIDs = new String[0];
 
-    // Additional arrays to help us search and display details
+    // Additional parallel arrays for searching and displaying details
     private String[] recipients = new String[0];
     private String[] senders = new String[0];
     private String[] statuses = new String[0];
 
-    // A list to temporarily hold the data before it goes into the arrays
+    // Internal records retain the complete message details
     private final List<MessageRecord> messages = new ArrayList<>();
 
-    // Inner class to hold the data for a single message
+    // Inner class to hold the data
     private static class MessageRecord {
         String id;
         String hash;
@@ -50,17 +50,17 @@ public class StoredMessages {
         }
     }
 
-    // Constructor: runs when we create a new StoredMessages object
+    // Constructor
     public StoredMessages() {
         loadStoredMessagesFromJSON();
         populateArrays();
     }
 
-    // This method reads the JSON file and creates MessageRecord objects
-    // Attribution: Research on reading text files line-by-line in Java 
-    // Source: Oracle Java 8 Documentation - java.util.Scanner 
-    // URL: https://docs.oracle.com/javase/8/docs/api/java/util/Scanner.html
-    
+    // ===============================================================
+    // PART 1: READING AND POPULATING ARRAYS
+    // ===============================================================
+
+    // Read the JSON file using standard File and Scanner
     public void loadStoredMessagesFromJSON() {
         messages.clear();
         try {
@@ -94,9 +94,8 @@ public class StoredMessages {
         }
     }
 
-    // This method moves the data from the list into the 5 required arrays
+    // Populate the required arrays
     public final void populateArrays() {
-        // Reset the arrays to empty before filling them up
         sentMessages = new String[0];
         disregardedMessages = new String[0];
         storedMessages = new String[0];
@@ -106,16 +105,13 @@ public class StoredMessages {
         senders = new String[0];
         statuses = new String[0];
 
-        // Loop through every message we read from the JSON file
         for (MessageRecord msg : messages) {
-            // Add the data to the parallel arrays
             messageHashes = addToArray(messageHashes, msg.hash);
             messageIDs = addToArray(messageIDs, msg.id);
             recipients = addToArray(recipients, msg.recipient);
             senders = addToArray(senders, msg.sender);
             statuses = addToArray(statuses, msg.status);
 
-            // Put the message text into the correct array based on its status
             if ("Sent".equalsIgnoreCase(msg.status)) {
                 sentMessages = addToArray(sentMessages, msg.text);
             } else if ("Disregard".equalsIgnoreCase(msg.status) || "Disregarded".equalsIgnoreCase(msg.status)) {
@@ -126,7 +122,7 @@ public class StoredMessages {
         }
     }
 
-    // Helper method to resize an array so we can add a new item to it
+    // Helper method to resize arrays dynamically
     private String[] addToArray(String[] array, String value) {
         String[] newArray = new String[array.length + 1];
         System.arraycopy(array, 0, newArray, 0, array.length);
@@ -134,9 +130,56 @@ public class StoredMessages {
         return newArray;
     }
 
-    // This method displays the Part 3 menu and handles the user's choices
-   
-        public void storedMessagesMenu(Scanner input) {
+    // ===============================================================
+    // PART 2: SEPARATED LOGIC METHODS (Private for encapsulation!)
+    // ===============================================================
+
+    public String getLongestMessage() {
+        String longest = "";
+        for (String s : storedMessages) {
+            if (s.length() > longest.length()) {
+                longest = s;
+            }
+        }
+        return longest;
+    }
+
+    private void searchMessageID(String searchID) {
+        for (MessageRecord msg : messages) {
+            if (msg.id.equals(searchID)) {
+                System.out.println("Found! Recipient: " + msg.recipient + " | Message: " + msg.text);
+            }
+        }
+    }
+
+    private void searchRecipient(String searchRecip) {
+        for (MessageRecord msg : messages) {
+            if (msg.recipient.equals(searchRecip)) {
+                System.out.println("Message: " + msg.text);
+            }
+        }
+    }
+
+    private void deleteMessageByHash(String deleteHash) {
+        messages.removeIf(msg -> msg.hash.equals(deleteHash));
+        populateArrays(); // Refresh arrays
+        System.out.println("Message successfully deleted.");
+    }
+
+    private void displayFullReport() {
+        for (int i = 0; i < storedMessages.length; i++) {
+            System.out.println("---------------------------");
+            System.out.println("Message Hash: " + messageHashes[i]);
+            System.out.println("Recipient: " + recipients[i]);
+            System.out.println("Message: " + storedMessages[i]);
+        }
+    }
+
+    // ===============================================================
+    // PART 3: THE MENU
+    // ===============================================================
+
+    public void storedMessagesMenu(Scanner input) {
         boolean back = false;
         
         while (!back) {
@@ -154,55 +197,27 @@ public class StoredMessages {
 
             switch (choice) {
                 case "a":
-                    // Loop through stored messages and print sender/recipient
                     for (int i = 0; i < storedMessages.length; i++) {
                         System.out.println("Sender: " + senders[i] + " | Recipient: " + recipients[i]);
                     }
                     break;
                 case "b":
-                    // Search for the longest message
-                    String longest = "";
-                    for (String s : storedMessages) {
-                        if (s.length() > longest.length()) longest = s;
-                    }
-                    System.out.println("Longest Message: " + longest);
+                    System.out.println("Longest Message: " + getLongestMessage());
                     break;
                 case "c":
-                    // Search through the internal 'messages' list (safe from crashes)
                     System.out.print("Enter Message ID: ");
-                    String searchID = input.nextLine();
-                    for (MessageRecord msg : messages) {
-                        if (msg.id.equals(searchID)) {
-                            System.out.println("Found! Recipient: " + msg.recipient + " | Message: " + msg.text);
-                        }
-                    }
+                    searchMessageID(input.nextLine());
                     break;
                 case "d":
-                    // Search through the internal 'messages' list (safe from crashes)
                     System.out.print("Enter Recipient: ");
-                    String searchRecip = input.nextLine();
-                    for (MessageRecord msg : messages) {
-                        if (msg.recipient.equals(searchRecip)) {
-                            System.out.println("Message: " + msg.text);
-                        }
-                    }
+                    searchRecipient(input.nextLine());
                     break;
                 case "e":
-                    // Delete a message using its hash
                     System.out.print("Enter Hash to delete: ");
-                    String deleteHash = input.nextLine();
-                    messages.removeIf(msg -> msg.hash.equals(deleteHash));
-                    populateArrays(); // Rebuild arrays so the deletion takes effect
-                    System.out.println("Message successfully deleted.");
+                    deleteMessageByHash(input.nextLine());
                     break;
                 case "f":
-                    // Print the full report
-                    for (int i = 0; i < storedMessages.length; i++) {
-                        System.out.println("---------------------------");
-                        System.out.println("Message Hash: " + messageHashes[i]);
-                        System.out.println("Recipient: " + recipients[i]);
-                        System.out.println("Message: " + storedMessages[i]);
-                    }
+                    displayFullReport();
                     break;
                 case "x":
                     back = true;
@@ -212,14 +227,12 @@ public class StoredMessages {
             }
         }
     }
-    
-     // ===============================================================
-    // PASTE THE GETTERS HERE
+
     // ===============================================================
+    // GETTERS (Must be public so Unit Tests can use them)
+    // ===============================================================
+    
     public String[] getSentMessages() { return sentMessages; }
     public String[] getDisregardedMessages() { return disregardedMessages; }
     public String[] getStoredMessages() { return storedMessages; }
-  
- }
-
-
+}
