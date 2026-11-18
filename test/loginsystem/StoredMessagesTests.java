@@ -8,6 +8,7 @@ import org.junit.Test;
 import java.io.FileWriter;
 import java.util.Scanner;
 import static org.junit.Assert.*;
+import org.junit.After;
 
 /**
  *
@@ -133,5 +134,14 @@ public class StoredMessagesTests {
         assertTrue(output.contains("Message Hash: H2"));
         assertTrue(output.contains("Recipient: +27838884567"));
         assertTrue(output.contains("Message: Where are you? You are late! I have asked you to be on time."));
+    }
+    
+     @After
+    public void tearDown() {
+        // This deletes the test file after every test so your main program stays clean
+        java.io.File file = new java.io.File("messages.json");
+        if (file.exists()) {
+            file.delete();
+        }
     }
 }
