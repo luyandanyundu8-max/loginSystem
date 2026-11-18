@@ -27,4 +27,5 @@ jobs:
         
     - name: Build and Test with Ant
       run: |
+        cd loginSystem
         ant clean test
