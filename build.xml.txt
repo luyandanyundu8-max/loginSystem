@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="loginSystem" default="default" basedir=".">
+    <description>Builds and tests the project loginSystem.</description>
+    
+    <!-- Define the folders -->
+    <property name="src.dir" location="src"/>
+    <property name="build.dir" location="build"/>
+    <property name="test.dir" location="test"/>
+    <property name="lib.dir" location="lib"/>
+
+    <!-- Define the classpaths for compilation -->
+    <path id="master-classpath">
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+        <pathelement location="${build.dir}"/>
+    </path>
+
+    <!-- Target to clean the build -->
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <!-- Target to compile the main code -->
+    <target name="compile" depends="clean">
+        <mkdir dir="${build.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="false">
+            <classpath refid="master-classpath"/>
+        </javac>
+    </target>
+
+    <!-- Target to run the tests -->
+    <target name="test" depends="compile">
+        <mkdir dir="${build.dir}"/>
+        <javac srcdir="${test.dir}" destdir="${build.dir}" includeantruntime="false">
+            <classpath refid="master-classpath"/>
+        </javac>
+        <junit printsummary="yes" haltonfailure="yes">
+            <classpath refid="master-classpath"/>
+            <formatter type="plain"/>
+            <!-- This tells JUnit to run all test files in the loginsystem package -->
+            <batchtest>
+                <fileset dir="${test.dir}">
+                    <include name="**/*Test.java"/>
+                </fileset>
+            </batchtest>
+        </junit>
+    </target>
+</project>
