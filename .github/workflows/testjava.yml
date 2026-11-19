@@ -27,4 +27,4 @@ jobs:
 
     - name: Build and Test with Ant
       run: |
-        ant clean test -Dlibs.CopyLibs.classpath="lib/junit-4.13.2.jar:lib/hamcrest-core-1.3.jar" -Dtest.classpath="lib/junit-4.13.2.jar:lib/hamcrest-core-1.3.jar"
+        ant clean test -Dplatform.active=default_platform -Djavac.source=11 -Djavac.target=11 -Dlibs.CopyLibs.classpath="lib/junit-4.13.2.jar:lib/hamcrest-core-1.3.jar" -Dtest.classpath="lib/junit-4.13.2.jar:lib/hamcrest-core-1.3.jar"
